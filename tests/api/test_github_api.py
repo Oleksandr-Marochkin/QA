@@ -31,3 +31,27 @@ def test_repo_can_not_be_found(github_api):
 def test_repo_with_single_char_can_be_found(github_api):
     r = github_api.search_repo("s")
     assert r["total_count"] != 0
+
+
+@pytest.mark.api_ind
+def test_search_emoji_positive(github_api):
+    r = github_api.search_emoji()
+    assert "1f4af.png" in r["100"]
+
+
+@pytest.mark.api_ind
+def test_search_emoji_negative(github_api):
+    r = github_api.search_emoji()
+    assert ["1234"] != "Not Found"
+
+
+@pytest.mark.api_ind
+def test_commit_sha_positive(github_api):
+    r = github_api.get_commits("Oleksandr-Marochkin", "QA", "master")
+    assert "b1895e0e1967f62e135bb0055336afa5dff81fcd" in r["sha"]
+
+
+@pytest.mark.api_ind
+def test_commit_author_positive(github_api):
+    r = github_api.get_commits("Oleksandr-Marochkin", "QA", "master")
+    assert r["commit"]["author"]["name"] == "Oleksandr Marochkin"

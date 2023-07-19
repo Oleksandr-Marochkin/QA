@@ -13,3 +13,13 @@ class GitHub:
         )
         body = r.json()
         return body
+
+    def search_emoji(self):
+        r = requests.get(f"https://api.github.com/emojis")
+        body = r.json()
+        return body
+
+    def get_commits(self, owner, repo, ref):
+        r = requests.get(f"https://api.github.com/repos/{owner}/{repo}/commits/{ref}")
+        body = r.json()
+        return body
