@@ -46,9 +46,9 @@ def test_search_emoji_negative(github_api):
 
 
 @pytest.mark.api_ind
-def test_commit_sha_positive(github_api):
+def test_commit_email_positive(github_api):
     r = github_api.get_commits("Oleksandr-Marochkin", "QA", "master")
-    assert "b1895e0e1967f62e135bb0055336afa5dff81fcd" in r["sha"]
+    assert r["commit"]["author"]["email"] == "alexander.dec@gmail.com"
 
 
 @pytest.mark.api_ind
