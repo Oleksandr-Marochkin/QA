@@ -20,24 +20,25 @@ class SignInPage(BasePage):
         return self.driver.title == expected_title
 
 
-class SignInTriolan(BasePage):
-    URL = "https://triolan.name/LP.aspx"
+class TriolanSelectDnipro(BasePage):
+    URL = "https://triolan.com/index.aspx?lng=uk&reg=kiev"
 
     def go_to(self):
-        self.driver.get(SignInTriolan.URL)
+        self.driver.get(TriolanSelectDnipro.URL)
 
-    def try_login(self, number, password):
-        radio1_elem = self.driver.find_element(By.ID, "rb1")
-        radio1_elem.click()
-        number_elem = self.driver.find_element(By.NAME, "login2$tbAgreement")
-        number_elem.send_keys(number)
-        pass_elem = self.driver.find_element(By.NAME, "login2$tbPassword")
-        pass_elem.send_keys(password)
-        btn_elem = self.driver.find_element(By.NAME, "login2$btnLoginByAgr")
-        btn_elem.click()
+    def select_dnipro(self):
+        list_elem = self.driver.find_element(
+            By.ID, "select2-repRegionsHolder-container"
+        )
+        list_elem.click()
 
-    def check_title(self, expected_title):
-        return self.driver.title == expected_title
+        list_dnipro = self.driver.find_element(
+            By.XPATH, "/html/body/span/span/span[2]/ul/li[4]"
+        )
+        list_dnipro.click()
+
+    def check_url(self, expected_url):
+        return self.driver.current_url == expected_url
 
 
 class SignInAmazon(BasePage):
@@ -47,8 +48,8 @@ class SignInAmazon(BasePage):
         self.driver.get(SignInAmazon.URL)
 
     def try_login(self):
-        email_elem = self.driver.find_element(By.ID, "nav-link-accountList")
-        email_elem.click()
+        login_elem = self.driver.find_element(By.ID, "nav-cart")
+        login_elem.click()
 
         # cont_elem = self.driver.find_element(By.ID, "continue")
         # cont_elem.click()
@@ -107,6 +108,44 @@ class SignInBrides(BasePage):
 
         btn_elem = self.driver.find_element(
             By.XPATH, '//*[@id="one"]/ul/li/form[2]/div/p[3]/input'
+        )
+        btn_elem.click()
+
+    def check_title(self, expected_title):
+        return self.driver.title == expected_title
+
+
+class SearchInBridesById(BasePage):
+    URL = "https://www.army-of-brides.com"
+
+    def go_to(self):
+        self.driver.get(SearchInBridesById.URL)
+
+    def try_search(self, id):
+        id_elem = self.driver.find_element(By.XPATH, '//*[@id="new"]/form/div/input[1]')
+        id_elem.send_keys(id)
+
+        btn_elem = self.driver.find_element(
+            By.XPATH, '//*[@id="new"]/form/div/input[3]'
+        )
+        btn_elem.click()
+
+    def check_title(self, expected_title):
+        return self.driver.title == expected_title
+
+
+class SearchOrderNP(BasePage):
+    URL = "https://tracking.novaposhta.ua/#/uk/"
+
+    def go_to(self):
+        self.driver.get(SearchOrderNP.URL)
+
+    def try_search(self, number):
+        id_elem = self.driver.find_element(By.ID, "en")
+        id_elem.send_keys(number)
+
+        btn_elem = self.driver.find_element(
+            By.ID, "np-number-input-desktop-btn-search-en"
         )
         btn_elem.click()
 
